@@ -3,6 +3,11 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import path from 'path';
 import bodyParser from "body-parser";
+import db from "./config/db.js";
+
+
+//connection to databas
+db()
 
 
 const app = express();
