@@ -1,4 +1,4 @@
-# INVENTORY MANAGEMENT SOFTWARE FOR STOCK
+# INVENTORY MANAGEMENT SOFTWARE FOR BUSINESSES
 
 ## Description
 Inventory management software is a type of software application designed to help businesses efficiently track, manage, and optimize their inventory. It provides tools and features to monitor stock levels, streamline the procurement process, track item movements, and ensure that goods are available when needed while minimizing carrying costs and reducing the risk of overstock or stockouts.
