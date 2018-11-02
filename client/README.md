@@ -23,7 +23,7 @@ To run this project locally, follow these steps:
 
 
 4. Create a new File called `.env.local` on the root project and inside the #server folder, then reference the `.env.example` file for these directories to add the environment variable configurations
-5. Open your browser and visit: `[Medxoca](http://127.0.0.1:5173/)`
+5. Open your browser and visit: `[Inventory-app](http://127.0.0.1:5173/)`
 
 ## Contact
 
