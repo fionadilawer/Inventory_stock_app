@@ -150,7 +150,7 @@ export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
   //create re-set token
   let resetToken = crypto.randomBytes(32).toString("hex") + userExit._id;
   console.log(resetToken);
-    
+  
   //hashing the password in forgotten password
   const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
@@ -222,5 +222,8 @@ export const resetPassword = asyncHandler(async (req, res, next)=>{
   });
 
 });
+
+
+
 
 

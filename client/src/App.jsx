@@ -29,7 +29,7 @@ const App = () => {
         <Route path='/dashboard' element={
             <Sidebars>
               <Layout>
-                <Dashboard/>
+                <Dashboard /> 
               </Layout>
             </Sidebars>
         }/>
@@ -39,3 +39,6 @@ const App = () => {
 };
 
 export default App;
+
+
+
