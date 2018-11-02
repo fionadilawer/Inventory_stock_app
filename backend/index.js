@@ -4,7 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import bodyParser from "body-parser";
 import db from "./config/db.js";
-
+import userRouter from "./routes/user.route.js";
 
 //connection to databas
 db()
@@ -29,6 +29,10 @@ app.listen(port, ()=>{
 });
 
 
+//for all routes end-points
+app.use('/api/auth', userRouter);
+
+
 
 //middleware for handling errors 
 app.use((err, req, res, next)=>{
@@ -40,3 +44,5 @@ app.use((err, req, res, next)=>{
       message,
     });
 });
+
+
