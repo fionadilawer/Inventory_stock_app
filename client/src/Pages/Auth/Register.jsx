@@ -7,7 +7,7 @@ import Loader from '../../Component/loading/Loader';
 import { toast } from "react-toastify";
 
 const initialState = {
-  name: "",
+  username: "",
   email: "",
   password: "",
   comfirmpassword: "",
@@ -18,13 +18,13 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialState); 
-  const {name, email, password, comfirmpassword} = formData;
+  const {username, email, password, comfirmpassword} = formData;
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
 
   //handles the onchange input fields
-  const handldeChange = (e)=>{
+  const handleChange = (e)=>{
     setFormData({
       ...formData,
       [e.target.id]: e.target.value
@@ -40,6 +40,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!username || !email || !password) {
+      return toast.error("All fields are required");
+    }
 
     if (password.length < 6) {
       return toast.error("Passwords must be up to 6 characters");
@@ -82,7 +86,7 @@ const Register = () => {
 
   return (
       <>
-    <div className={`container ${styles.auth}`}>
+    <div className={`container  ${styles.auth}`}>
       {loading && <Loader />}
       <Card>
         <div className={styles.form}>
@@ -94,31 +98,31 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
           <input
               type="text"
-              placeholder="Name"
+              placeholder="username"
               required
-              id="name"
-              onChange={handldeChange}
+              id="username"
+              onChange={handleChange}
             />
             <input
               type="email"
               placeholder="Email"
               required
               id="email"
-              onChange={handldeChange}
+              onChange={handleChange}
             />
             <input
               type="password"
               placeholder="Password"
               required
               id="password"
-              onChange={handldeChange}
+              onChange={handleChange}
             />
             <input
               type="password"
               placeholder="Comfirm Password"
               required
               id="comfirmpassword"
-              onChange={handldeChange}
+              onChange={handleChange}
             />
             <button type="submit" className="--btn --btn-primary --btn-block">
               Register
