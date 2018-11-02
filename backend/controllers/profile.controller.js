@@ -198,6 +198,8 @@ export const resetPassword = asyncHandler(async (req, res, next)=>{
     const {password} = req.body;
     const {resetToken} = req.params;
 
+    if(!password) return next(errorHandler(400, 'please fill in the required input field'));
+
      // Hash token, then compare to Token in DB
   const hashedToken = crypto
   .createHash("sha256")
