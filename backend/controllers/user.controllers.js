@@ -66,19 +66,15 @@ export const signin = asyncHandler(async(req, res, next)=>{
     const token = jwt.sign({id: userExit._id}, process.env.JWT_SECRET);
     
     try {
-        if(validPassword){
-            // Send HTTP-only cookie
-           res.cookie("token", token, {
-             httpOnly: true,
-             expires: new Date(Date.now() + 1000 * 86400), // expires in 1-day
-             sameSite: "none",
-             secure: true,
-           });
-         }
          if (userExit && validPassword) {
-            res.status(200).json('login successfully');
+            res.cookie("token", token, {
+                httpOnly: true,
+                expires: new Date(Date.now() + 1000 * 86400), // expires in 1-day
+                sameSite: "none",
+                secure: true,
+              })
+            .status(200).json('login successfully');
         }
-        
     } catch (error) {
         next(error  )
     }
