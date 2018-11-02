@@ -4,7 +4,8 @@ import {
     createProduct, 
     getUserProduct, 
     getsingleProduct, 
-    deleteproduct
+    deleteproduct,
+    updateproduct
 } from '../controllers/product.controller.js';
 import { upload } from '../utils/fileUpload.js';
 
@@ -16,6 +17,7 @@ productRouter.post('/createproduct', VerifyUserToken, upload.single("image"), cr
 productRouter.get('/getproduct', VerifyUserToken, getUserProduct);
 productRouter.get('/singleproduct/:id', VerifyUserToken, getsingleProduct);
 productRouter.delete('/deleteproduct/:id', VerifyUserToken, deleteproduct);
+productRouter.patch('/updatepproduct/:id', VerifyUserToken, upload.single("image"), updateproduct);
 
 export default productRouter;
 
