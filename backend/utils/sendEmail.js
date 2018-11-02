@@ -18,7 +18,7 @@ export const sendEmail = asyncHandler(async (subject, message, send_to, sent_fro
     tls:{
         rejectUnauthorized: false
     },  //not compulsory
-    timeout: 30000,  
+    timeout: 10000,  
   });
     
 

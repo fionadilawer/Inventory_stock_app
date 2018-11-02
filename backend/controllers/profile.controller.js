@@ -150,6 +150,7 @@ export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
 
   //create re-set token
   let resetToken = crypto.randomBytes(32).toString("hex") + userExit._id;
+  console.log(resetToken);
     
   //hashing the password in forgotten password
   const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
@@ -189,6 +190,37 @@ export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
       }
 });
 
+
+//@desc      RESET_PASSWORD funct...
+//@route    PUT /api/profile/resetpassword
+//@access    public
+export const resetPassword = asyncHandler(async (req, res, next)=>{
+    const {password} = req.body;
+    const {resetToken} = req.params;
+
+     // Hash token, then compare to Token in DB
+  const hashedToken = crypto
+  .createHash("sha256")
+  .update(resetToken)
+  .digest("hex");
+
+  // fIND tOKEN in DB
+  const userToken = await TokenModel.findOne({
+    token: hashedToken,
+    expiresAt: { $gt: Date.now() },
+  });
+
+    if (!userToken) return next(errorHandler(404, 'Invalid or Expired Token'));
+
+     // Find user
+  const user = await User.findOne({ _id: userToken.userId });
+  user.password = password;
+  await user.save();
+  res.status(200).json({
+    message: "Password Reset Successful, Please Login",
+  });
+
+});
 
 
 
