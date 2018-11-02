@@ -47,7 +47,7 @@ const Login = () => {
       dispatch(signInSuccess(data))
       setLoading(false);
       navigate('/dashboard');
-      toast.success("signup successfully");
+      toast.success("signin successfully");
     } catch (error) {
       setLoading(false);
       dispatch(signInFailure(error.message));
