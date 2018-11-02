@@ -29,9 +29,8 @@ const Forgot = () => {
           </button>
           <div className={styles.links}>
             <p>
-              <Link to="/login">- Login</Link>
+              <Link to="/login"> Login </Link>
             </p>
-      
           </div>
         </form>
       </div>
@@ -43,3 +42,6 @@ const Forgot = () => {
 }
 
 export default Forgot;
+
+
+
