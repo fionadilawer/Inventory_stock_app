@@ -3,23 +3,32 @@ import './Home.scss';
 import {RiProductHuntLine} from 'react-icons/ri';
 import { Link } from "react-router-dom";
 import hero from '../../assets/hero-inve.png';
+import {useSelector} from 'react-redux';
+
 
 const Home = () => {
+
+  const {currentUser} = useSelector(state => state.user);
+
+
   return (
     <div className="home">
       <nav className='container --flex-between'>
       <div className="logo">
           <RiProductHuntLine size={35} />
         </div>
+
         <ul className="home-links">
-           <li>
+          
+          {!currentUser ? <li>
               <Link to="/register">Register</Link>
-            </li>
-            <li>
+            </li> : <li>
               <button className="--btn --btn-primary">
                 <Link to="/login">Login</Link>
               </button>
             </li>
+          } 
+
             <li>
               <button className="--btn --btn-primary">
                 <Link to="/dashboard">Dashboard</Link>

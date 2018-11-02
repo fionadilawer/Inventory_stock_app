@@ -11,6 +11,7 @@ import Sidebars from './Component/sidebar/Sidebars';
 import Layout from './Component/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from './Component/protect/PrivateRoute';
 
 
 
@@ -26,13 +27,17 @@ const App = () => {
         <Route path="/register" element={<Register/>} />
         <Route path="/resetpassword/:resetToken" element={<Reset/>} />
 
-        <Route path='/dashboard' element={
+        <Route element={<PrivateRoute/>}>
+          <Route path='/dashboard' element={
             <Sidebars>
               <Layout>
                 <Dashboard /> 
               </Layout>
             </Sidebars>
-        }/>
+          }/>
+        </Route>
+
+        
     </Routes>
     </>
   )
