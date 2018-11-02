@@ -7,6 +7,7 @@ import db from "./config/db.js";
 import userRouter from "./routes/user.route.js";
 import profileRouter from "./routes/profile.route.js";
 import productRouter from "./routes/product.route.js";
+import contactRouter from "./routes/contact.route.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -42,7 +43,7 @@ app.listen(port, ()=>{
 app.use('/api/auth', userRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/product', productRouter);
-
+app.use('/api/contact', contactRouter);
 
 //middleware for handling errors 
 app.use((err, req, res, next)=>{

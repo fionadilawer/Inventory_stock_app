@@ -30,7 +30,7 @@ export const getUser = asyncHandler(async (req, res, next)=>{
 });
 
 
-//@desc      LoggedIn funct...
+//@desc      LoggedIn STATUS funct...
 //@route    GET /api/profile/userlogin
 //@access    public
 export const loginStatus = asyncHandler(async(req, res, next)=>{
