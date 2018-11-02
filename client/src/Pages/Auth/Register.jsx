@@ -6,6 +6,7 @@ import styles from "./auth.module.scss";
 import Loader from '../../Component/loading/Loader';
 import { toast } from "react-toastify";
 import Oauth from '../../Component/Oauth/Oauth';
+import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai';
 
 const initialState = {
   username: "",
@@ -84,6 +85,17 @@ const Register = () => {
     }
   };
 
+  //toggling for password eye
+  const [passwordEye, setPasswordEye] = useState(false);
+  const handlePasswordEye = () => {
+    setPasswordEye(!passwordEye)
+  }
+  
+  const [confirmPasswordEye, setConfirmPasswordEye] = useState(false);
+  const handleConfirmPasswordEye = () => {
+    setConfirmPasswordEye(!confirmPasswordEye)
+  }
+
 
   return (
       <>
@@ -111,20 +123,31 @@ const Register = () => {
               id="email"
               onChange={handleChange}
             />
+            <div className='my-2 w-full relative'>
             <input
-              type="password"
+              type={(passwordEye === false) ? 'password' : 'text'}
               placeholder="Password"
               required
               id="password"
               onChange={handleChange}
             />
+            <div className='absolute right-2 top-6 cursor-pointer'>
+            {(passwordEye === false) ? <AiFillEyeInvisible size={20} onClick={handlePasswordEye} className='text-gray-400'/> : <AiFillEye size={20} onClick={handlePasswordEye} className='text-gray-400'/>}
+            </div>
+            </div>
+
+            <div className='my-2 w-full relative'>
             <input
-              type="password"
+              type={(confirmPasswordEye === false) ? 'password' : 'text'} 
               placeholder="Comfirm Password"
               required
               id="comfirmpassword"
               onChange={handleChange}
             />
+            <div className='absolute right-2 top-6 cursor-pointer'>
+            {(confirmPasswordEye === false) ? <AiFillEyeInvisible size={20} onClick={handleConfirmPasswordEye} className='text-gray-400'/> : <AiFillEye size={20} onClick={handleConfirmPasswordEye} className='text-gray-400'/>}
+            </div>
+            </div>
             <button type="submit" className="--btn --btn-primary --btn-block">
               Register
             </button>

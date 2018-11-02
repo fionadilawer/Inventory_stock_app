@@ -3,11 +3,12 @@ import Card from '../../Component/card/Card';
 import {BiLogIn} from 'react-icons/bi';
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.scss";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {signInStart, signInSuccess, signInFailure} from '../../Redux/user/Auth.slice';
 import { toast } from "react-toastify";
 import Loader from '../../Component/loading/Loader';
 import Oauth from '../../Component/Oauth/Oauth';
+import {AiFillEyeInvisible, AiFillEye} from 'react-icons/ai';
 
 const Login = () => {
 
@@ -56,6 +57,12 @@ const Login = () => {
     }
   };
 
+   //toggling for password eye
+   const [passwordEye, setPasswordEye] = useState(false);
+   const handlePasswordEye = () => {
+     setPasswordEye(!passwordEye)
+   }
+
 
   return (
     <>
@@ -77,13 +84,20 @@ const Login = () => {
               id="email"
               onChange={handleChange}
             />
+
+            <div className='my-2 w-full relative'>
             <input
-              type="password"
+              type={(passwordEye === false) ? 'password' : 'text'}
               placeholder="Password"
               required
               id="password"
               onChange={handleChange}
             />
+            <div className='absolute right-2 top-6 cursor-pointer'>
+            {(passwordEye === false) ? <AiFillEyeInvisible size={20} onClick={handlePasswordEye} className='text-gray-400'/> : <AiFillEye size={20} onClick={handlePasswordEye} className='text-gray-400'/>}
+            </div>
+            </div>
+
             <button type="submit" className="--btn --btn-primary --btn-block">
               Login
             </button>
