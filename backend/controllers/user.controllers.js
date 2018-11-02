@@ -109,6 +109,9 @@ export const signout = asyncHandler(async (req, res, next)=>{
 //@access    public
 export const google = asyncHandler(async(req, res, next)=>{
     try {
+        //validating the email input field
+      if (!req.body.email) return next(errorHandler(400, 'please, fill in the required fields'));
+
         const userExit = await User.findOne({ email: req.body.email });
         if (userExit) {
           const token = jwt.sign({ id: userExit._id }, process.env.JWT_SECRET);
@@ -152,7 +155,7 @@ export const google = asyncHandler(async(req, res, next)=>{
 });
 
 
-//generating user name from email
+//generating userName from email
 function generateUsernameFromEmail(email) {
     // Split the email address using "@" and take the part before "@"
     const parts = email.split('@');
@@ -162,4 +165,6 @@ function generateUsernameFromEmail(email) {
       // If the email address doesn't contain "@", use a default username
       return "defaultUsername";
     }
-  };
+};
+
+
