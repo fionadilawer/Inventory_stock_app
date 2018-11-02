@@ -57,3 +57,53 @@ export const createProduct = asyncHandler(async (req, res, next) => {
   });
   
 
+  //@desc      GETTING_ALL_PRODUCT funct...
+  //@route    POST /api/product/getproduct
+  //@access    public
+  export const getUserProduct = asyncHandler(async (req, res, next)=>{
+    try {
+      //GETTING THE PRODUCT THAT THE USER CREATED
+      const products = await Product.find({ user: req.user.id }).sort("-createdAt");  //sorting it to show first
+       res.status(200).json(products);
+    } catch (error) {
+      next(error)
+    }
+  });
+
+
+
+  //@desc   GETTING_SINGLE_PRODUCT funct...
+  //@route    POST /api/product/singleproduct/:id
+  //@access    public
+  export const getsingleProduct = asyncHandler(async (req, res, next)=>{
+    const product = await Product.findById(req.params.id);
+    // if product doesnt exist
+    if (!product) return next(errorHandler(404, 'User not authorized'));
+    
+    // Match product to its user
+    if (product.user.toString() !== req.user.id) return next(errorHandler(401, 'User not authorized'));
+    
+    res.status(200).json(product);
+  });
+
+
+
+  //@desc   DELETING_SINGLE_PRODUCT funct...
+  //@route    POST /api/product/deleteproduct/:id
+  //@access    public
+  export const deleteproduct = asyncHandler(async (req, res, next)=>{
+    const product = await Product.findById(req.params.id);
+    // if product doesnt exist
+    if (!product) return next(errorHandler(404, "Product not found"))
+    
+    // Match product to its user
+    if (product.user.toString() !== req.user.id) return next(errorHandler(401, 'User not authorized'))
+
+    try {
+      await Product.findByIdAndDelete(req.params.id);
+      res.status(200).json({ message: "Product deleted."});
+   } catch(error) {
+     next(error);
+   };
+    
+  });
