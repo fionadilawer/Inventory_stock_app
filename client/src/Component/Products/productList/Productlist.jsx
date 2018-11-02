@@ -1,11 +1,25 @@
-import React from 'react';
+import {useState} from 'react';
 import "./productlist.scss";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Loader from '../../loading/Loader';
+import Search from '../../search/Search';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  FILTER_PRODUCTS,
+  selectFilteredPoducts,
+} from "../../../Redux/product/FilterSlice";
+import { useEffect } from 'react';
 
 const Productlist = ({products, isLoading}) => {
+
+  const filteredProducts = useSelector(selectFilteredPoducts);
+
+  const dispatch = useDispatch();
+
+
+  const [search, setSearch] = useState("");
 
 
   //shorten any text to a particular length number
@@ -18,6 +32,13 @@ const Productlist = ({products, isLoading}) => {
   };
 
 
+
+  //handles the filter func...
+  useEffect(()=>{
+    dispatch(FILTER_PRODUCTS({ products, search }));
+  },[products, search, dispatch]);
+
+
   return (
     <div className="product-list">
       <hr />
@@ -28,7 +49,7 @@ const Productlist = ({products, isLoading}) => {
             <h3>e-ventory Items</h3>
           </span>
           <span>
-            <h3>Search</h3>
+            <Search value={search} onChange={(e) => setSearch(e.target.value)} />
           </span>
       </div>
 
@@ -51,7 +72,7 @@ const Productlist = ({products, isLoading}) => {
 
            {/* { mapping all the items from the product} */}
           <tbody>
-            {products.map((product, index)=>{
+            {filteredProducts.map((product, index)=>{
               const { _id, name, category, price, quantity } = product;
               return (
                  <tr key={_id}>
