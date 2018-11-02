@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 
 
 //sending e-mail
-export const sendEmail = asyncHandler(async (subject, message, send_to, sent_from, reply_to, next)=>{
+export const sendEmail = asyncHandler(async (subject, message, send_to, sent_from, reply_to)=>{
 
     //creatied email transporter
   const transporter = nodemailer.createTransport({
