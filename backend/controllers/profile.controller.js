@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../model/user.model.js';
 import {errorHandler} from '../utils/errors.js';
 import jwt from 'jsonwebtoken';
-
+import bcrypt from 'bcryptjs';
 
 //@desc      GET_USER funct...
 //@route    GET /api/profile/getuser
@@ -36,7 +36,6 @@ export const loginStatus = asyncHandler(async(req, res, next)=>{
             res.status(200).json({ success: false, message: "User is not logged in" });
             return;
         }
-
         // Verify Token
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         if (verified) {
@@ -88,6 +87,48 @@ export const updatedUser = asyncHandler(async (req, res, next) => {
 });
 
 
+//@desc      UPDATE_USER_PASSWORD funct...
+//@route    GET /api/profile/changepassword
+//@access    public
+export const passwordChange = asyncHandler(async (req, res, next)=>{
+  try {
+    const userExist = await User.findById(req.user._id);
+
+    const {oldpassword, password} = req.body;
+
+    //if no user
+    if (!userExist) {
+        next(errorHandler(400, 'user does not exist'));
+    };
+
+    //validation
+    if (!oldpassword || !password) {
+        next(errorHandler(400, 'please, fill in the required fields'));
+    };
+
+    //checking id old password matches new password
+    const passwordIsCorrect = bcrypt.compareSync(oldpassword, userExist.password);
+
+    //save new password
+    if (userExist && passwordIsCorrect) {
+        userExist.password = password
+        await userExist.save()
+        res.status(200).json('password changed successfull')
+    }else{
+        next(errorHandler(404, 'password is incorrect'))
+    }
+  } catch (error) {
+    next(error)
+  };
+});
+
+
+//@desc      FORGOTTEN_PASSWORD funct...
+//@route    GET /api/profile/forgotpassword
+//@access    public
+export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
+  
+});
 
 
 
@@ -95,46 +136,6 @@ export const updatedUser = asyncHandler(async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// export const updatedUser = asyncHandler(async (req, res, next)=>{
-//     const userExist = await User.findById(req.user._id);
-
-//     try {
-//         if (userExist) {    
-//             //de-structuring the data in the model
-//            const { username, email, phone, photo, bio } = userExist;
-//            userExist.email = email;
-//            userExist.username  = req.body.username || username;
-//            userExist.phone  = req.body.phone || phone;
-//            userExist.photo  = req.body.photo || photo;
-//            userExist.bio  = req.body.bio || bio;
-    
-//            const updatedUser = await userExist.save();
-
-//            res.status(200).json({
-//               _id: updatedUser._id,
-//               username: updatedUser.username,
-//               phone: updatedUser.phone,
-//               photo: updatedUser.photo,
-//               bio: updatedUser.bio,
-//            })
-//         } else{
-//          next(errorHandler(404, 'user not found'));
-//         }
-//     } catch (error) {
-//         next(error);
-//     }
-// });
 
 
 
