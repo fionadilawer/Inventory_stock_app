@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import User from '../model/user.model.js';
-import {errorHandler} from '../utils/errors.js'
+import {errorHandler} from '../middlewares/errors.js'
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 

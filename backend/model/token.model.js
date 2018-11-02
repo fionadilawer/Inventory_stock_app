@@ -22,4 +22,3 @@ const TokenScheme = mongoose.Schema({
 
 const TokenModel = mongoose.model('Token', TokenScheme);
 export default TokenModel;
-

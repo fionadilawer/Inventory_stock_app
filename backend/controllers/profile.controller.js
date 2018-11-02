@@ -1,8 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import User from '../model/user.model.js';
-import {errorHandler} from '../utils/errors.js';
+import TokenModel from '../model/token.model.js';
+import {errorHandler} from '../middlewares/errors.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 //@desc      GET_USER funct...
 //@route    GET /api/profile/getuser
@@ -127,7 +132,50 @@ export const passwordChange = asyncHandler(async (req, res, next)=>{
 //@route    GET /api/profile/forgotpassword
 //@access    public
 export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
+  const {email} = req.body;
+
+  //validating the input fields
+  if (!email ) return next(errorHandler(400, 'please, fill in the required fields'));
+
+  const userExit = await User.findOne({email});
+
+  if (!userExit) return next(errorHandler(404, 'user does not exist'));
+
+  //create re-set token
+  let resetToken = crypto.randomBytes(32).toString("hex") + userExit._id;
+    
+  //hashing the password in forgotten password
+  const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+  //saving hashedToken to TokenModel db
+  await new TokenModel({
+    userId: userExit._id,
+    token: hashedToken,  
+    createdAt: Date.now(),  //current date and time 
+    expiresAt: Date.now() + 30 * (60 * 1000) //expires in 30mins time
+  }).save();
+
+  //contruct a reset url
+  const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+  //re-set email
+  const message = `
+      <h2>Hello ${userExit.username}</h2>
+      <p>Please use the url below to reset your password</p>  
+      <p>This reset link is valid for only 30minutes.</p>
+
+      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+
+      <p>Regards...</p>
+      <p>e-ventory Team</p>
+    `;
+
+    const subject = "Password Reset Request";
+    const send_to = userExit.email;
+    const sent_from = process.env.EMAIL_USER;
+
   
+  res.json(hashedToken);
 });
 
 

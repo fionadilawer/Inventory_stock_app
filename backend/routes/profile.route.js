@@ -6,7 +6,7 @@ import {
     passwordChange, 
     updatedUser 
 } from '../controllers/profile.controller.js';
-import { VerifyUserToken } from '../utils/verify.user.js';
+import { VerifyUserToken } from '../middlewares/verify.user.js';
 const profileRouter = express.Router();
 
 profileRouter.get('/getuser', VerifyUserToken, getUser);
