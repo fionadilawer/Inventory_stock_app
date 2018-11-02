@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import db from "./config/db.js";
 import userRouter from "./routes/user.route.js";
 import profileRouter from "./routes/profile.route.js";
+import productRouter from "./routes/product.route.js";
 
 //connection to databas
 db()
@@ -33,7 +34,7 @@ app.listen(port, ()=>{
 //for all routes end-points
 app.use('/api/auth', userRouter);
 app.use('/api/profile', profileRouter);
-
+app.use('/api/product', productRouter);
 
 //middleware for handling errors 
 app.use((err, req, res, next)=>{
