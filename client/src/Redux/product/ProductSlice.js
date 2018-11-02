@@ -29,13 +29,28 @@ const productSlice = createSlice({
               state.error = action.payload,
               state.loading = false
           },
+          GetProductStart: (state)=>{
+            state.loading = true
+          },
+          GetProductSuccess: (state, action)=>{
+              state.products = action.payload,
+              state.loading = true,
+              state.error = null
+          },
+          GetProductFailure: (state, action)=>{
+              state.error = action.payload,
+              state.loading = false
+          },
     }
 });
 
 export const {
   CreateFailure,
   CreateStart,
-  CreateSuccess   
+  CreateSuccess,
+  GetProductFailure,
+  GetProductStart,
+  GetProductSuccess   
 } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -56,7 +56,7 @@ export const loginStatus = asyncHandler(async(req, res, next)=>{
 
 
 //@desc      UPDATE_USER funct...
-//@route    GET /api/profile/updateprofile
+//@route    PATCH /api/profile/updateprofile
 //@access    public
 export const updatedUser = asyncHandler(async (req, res, next) => {
     try {
@@ -82,7 +82,7 @@ export const updatedUser = asyncHandler(async (req, res, next) => {
             };
             res.status(200).json(jsonResponse);
         } else {
-            next(errorHandler(404, 'User not found'))
+            next(errorHandler(404, 'User not found'));
         }
     } catch (error) {
         // Handle other errors with a 500 response
@@ -93,7 +93,7 @@ export const updatedUser = asyncHandler(async (req, res, next) => {
 
 
 //@desc      UPDATE_USER_PASSWORD funct...
-//@route    GET /api/profile/changepassword
+//@route    PATCH /api/profile/changepassword
 //@access    public
 export const passwordChange = asyncHandler(async (req, res, next)=>{
   try {
@@ -129,7 +129,7 @@ export const passwordChange = asyncHandler(async (req, res, next)=>{
 
 
 //@desc      FORGOTTEN_PASSWORD funct...
-//@route    GET /api/profile/forgotpassword
+//@route    POST /api/profile/forgotpassword
 //@access    public
 export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
   const {email} = req.body;
