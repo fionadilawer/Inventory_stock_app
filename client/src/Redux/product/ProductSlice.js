@@ -41,6 +41,19 @@ const productSlice = createSlice({
               state.error = action.payload,
               state.loading = false
           },
+          CALC_STORE_VALUE(state, action) {
+              const products = action.payload;
+              const array = [];
+              products.map((item) => {
+                const { price, quantity } = item;
+                const productValue = price * quantity;
+                return array.push(productValue);
+              });
+              const totalValue = array.reduce((a, b) => {
+                return a + b;
+              }, 0);
+              state.totalStoreValue = totalValue;
+            },
     }
 });
 
@@ -50,8 +63,12 @@ export const {
   CreateSuccess,
   GetProductFailure,
   GetProductStart,
-  GetProductSuccess   
+  GetProductSuccess,
+  CALC_STORE_VALUE   
 } = productSlice.actions;
+
+
+export const selectTotalStoreValue = (state) => state.product.totalStoreValue;
 
 export default productSlice.reducer;
 

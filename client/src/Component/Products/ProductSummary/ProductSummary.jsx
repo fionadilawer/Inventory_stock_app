@@ -4,7 +4,8 @@ import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { BsCart4, BsCartX } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import InforBox from "../../InforBox/InforBox";
+import InforBox, { InforBoxvalue } from "../../InforBox/InforBox";
+import { CALC_STORE_VALUE, selectTotalStoreValue } from "../../../Redux/product/ProductSlice";
 
 
 // Icons
@@ -14,7 +15,20 @@ const categoryIcon = <BiCategory size={40} color="#fff" />;
 const outOfStockIcon = <BsCartX size={40} color="#fff" />;
 
 
+// Format Amount
+export const formatNumbers = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const ProductSummary = ({products}) => {
+
+  const dispatch = useDispatch();
+  const totalStoreValue = useSelector(selectTotalStoreValue);
+
+  useEffect(() => {
+    dispatch(CALC_STORE_VALUE(products));
+  }, [dispatch, products]);
+
   return (
     <div className="product-summary">
       <h3 className="--mt">e-ventory Statistics</h3>
@@ -27,12 +41,12 @@ const ProductSummary = ({products}) => {
           bgColor="card1"
         />
 
-        <InforBox
+        <InforBoxvalue
           icon={earningIcon}
           title={"Total Store Value"}
-          count={0}
+          count={`${formatNumbers(totalStoreValue.toFixed(2))} `}
           bgColor="card2"
-        />
+          />
 
         <InforBox
           icon={outOfStockIcon}
