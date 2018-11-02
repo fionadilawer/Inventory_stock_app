@@ -70,7 +70,7 @@ export const signin = asyncHandler(async(req, res, next)=>{
 
     try {
          if (userExit && validPassword) {
-            res.cookie("token", token, {
+            res.cookie("access_token", token, {
                 httpOnly: true,
                 expires: new Date(Date.now() + 1000 * 86400), // expires in 1-day
                 sameSite: "none",
@@ -85,3 +85,81 @@ export const signin = asyncHandler(async(req, res, next)=>{
 });
 
 
+
+//@desc      SIGNOUT funct...
+//@route    GET /api/auth/signout
+//@access    public
+export const signout = asyncHandler(async (req, res, next)=>{
+    try {
+        res.cookie("access_token", "", {
+            httpOnly: true,
+            expires: new Date(0),  //expires now
+            sameSite: "none",
+            secure: true,
+        })
+        .status(200).json({message: "signout successfull"});
+    } catch (error) {
+        next(error)
+    }
+});
+
+
+//@desc      signing with google funct...
+//@route    POST /api/auth/google
+//@access    public
+export const google = asyncHandler(async(req, res, next)=>{
+    try {
+        const userExit = await User.findOne({ email: req.body.email });
+        if (userExit) {
+          const token = jwt.sign({ id: userExit._id }, process.env.JWT_SECRET);
+          const { password: pass, ...rest } = userExit._doc;
+          res
+            .cookie('access_token', token, { httpOnly: true })
+            .status(200)
+            .json(rest);
+        } else {
+
+            //generating a username base on the email
+            let username = generateUsernameFromEmail(req.body.email);
+
+          const generatedPassword =
+            Math.random().toString(36).slice(-8) +
+            Math.random().toString(36).slice(-8);
+        
+            //the new user
+          const newUser = new User({
+            username,
+            email: req.body.email,
+            password: generatedPassword,
+            photo: req.body.photo,
+          });
+          await newUser.save();
+          const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+          const { password: pass, ...rest } = newUser._doc;
+          res.cookie('access_token', token,
+            { 
+                httpOnly: true,
+                expires: new Date(Date.now() + 1000 * 86400),  //expires in 1-day
+                sameSite: "none",
+                secure: true,
+            })
+            .status(200)
+            .json(rest);
+        }
+      } catch (error) {
+        next(error);
+      }
+});
+
+
+//generating user name from email
+function generateUsernameFromEmail(email) {
+    // Split the email address using "@" and take the part before "@"
+    const parts = email.split('@');
+    if (parts.length > 0) {
+      return parts[0];
+    } else {
+      // If the email address doesn't contain "@", use a default username
+      return "defaultUsername";
+    }
+  };
