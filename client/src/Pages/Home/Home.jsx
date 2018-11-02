@@ -21,7 +21,7 @@ const Home = () => {
     greeting= ' Good morning';
   } else {
     greeting = 'Welcome';
-  }
+  };
 
 
   return (
