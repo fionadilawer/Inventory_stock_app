@@ -33,11 +33,11 @@ const Reset = () => {
     e.preventDefault();
 
     if (password.length < 6) {
-      return toast.error("Passwords must be up to 6 characters");
+      return toast.error("Password must be up to 6 characters");
     };
 
     if (password !== password2) {
-      return toast.error("Passwords do not match");
+      return toast.error("Password do not match");
     };
 
     try {
