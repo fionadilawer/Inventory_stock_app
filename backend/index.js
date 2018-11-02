@@ -41,6 +41,7 @@ app.use('/api/auth', userRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/product', productRouter);
 
+
 //middleware for handling errors 
 app.use((err, req, res, next)=>{
     const statuscode  = err.statuscode || 500;
