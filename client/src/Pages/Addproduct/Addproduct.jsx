@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductForm from '../../Component/productForm/ProductForm';
+import ProductForm from '../../Component/Products/productForm/ProductForm';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { 
