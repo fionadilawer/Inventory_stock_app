@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import { sendEmail } from '../utils/sendEmail.js';
 dotenv.config();
 
 
@@ -141,6 +142,12 @@ export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
 
   if (!userExit) return next(errorHandler(404, 'user does not exist'));
 
+  // Delete token if it exists in DB
+  let token = await TokenModel.findOne({ userId: userExit._id });
+  if (token) {
+    await token.deleteOne();
+  }
+
   //create re-set token
   let resetToken = crypto.randomBytes(32).toString("hex") + userExit._id;
     
@@ -174,8 +181,12 @@ export const ForgotenPassword = asyncHandler(async (req, res, next)=>{
     const send_to = userExit.email;
     const sent_from = process.env.EMAIL_USER;
 
-  
-  res.json(hashedToken);
+    try {
+        await sendEmail(subject, message, send_to, sent_from);
+        res.status(200).json({ success: true, message: "Reset Email Sent" });
+      } catch (error) {
+        next(errorHandler(500, 'Email not sent, please try again'));
+      }
 });
 
 

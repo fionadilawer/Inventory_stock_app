@@ -17,7 +17,8 @@ export const sendEmail = asyncHandler(async (subject, message, send_to, sent_fro
     },
     tls:{
         rejectUnauthorized: false
-    }  //not compulsory
+    },  //not compulsory
+    timeout: 30000,  
   });
     
 
@@ -30,15 +31,13 @@ export const sendEmail = asyncHandler(async (subject, message, send_to, sent_fro
     html: message,
   };
 
-  // send email
-  transporter.sendMail(options, function (err, info) {
-    if (err) {
-      //console.log(err);
-      next(err)
-    } else {
-        next(info)
-      //console.log(info);
-    }
-  });
+try {
+    const info = await transporter.sendMail(options);
+    console.log(info);
+  } catch (err) {
+    console.error(err);
+  }
 
 });
+
+
