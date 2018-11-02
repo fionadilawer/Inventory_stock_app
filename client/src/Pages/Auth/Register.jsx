@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.scss";
 import Loader from '../../Component/loading/Loader';
 import { toast } from "react-toastify";
+import Oauth from '../../Component/Oauth/Oauth';
 
 const initialState = {
   username: "",
@@ -128,6 +129,9 @@ const Register = () => {
               Register
             </button>
           </form>
+
+          <Oauth/>
+          
           <span className={styles.register}>
             <p> &nbsp; already have an account? &nbsp;</p>
             <Link to="/login">login</Link>

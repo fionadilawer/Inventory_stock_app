@@ -4,7 +4,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
     currentUser: null,
     error: null,
-    loading: null
+    loading: null,
+    isLoggedIn: false
 };
 
 //setting the user slice 
@@ -14,6 +15,9 @@ const userSlice = createSlice({
 
     //creating the reducers
     reducers:{
+        SET_LOGIN(state, action) {
+              state.isLoggedIn = action.payload;
+        },
         signInStart: (state)=>{
           state.loading = true
         },
@@ -78,7 +82,8 @@ export const {
     deleteUserSuccess,
     signoutUserStart,
     signoutUserSuccess,
-    signoutUserFailure
+    signoutUserFailure,
+    SET_LOGIN
 } = userSlice.actions;
 
 export default userSlice.reducer;

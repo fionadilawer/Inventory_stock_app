@@ -10,6 +10,19 @@ const Home = () => {
 
   const {currentUser} = useSelector(state => state.user);
 
+  //functionality for the greeting 
+  const hourNow = new Date().getHours();
+  let greeting;
+  if (hourNow >= 16) {
+    greeting = 'Good evening';
+  } else if (hourNow >= 12) {
+    greeting = 'Good afternoon';
+  } else if (hourNow >= 0) {
+    greeting= ' Good morning';
+  } else {
+    greeting = 'Welcome';
+  }
+
 
   return (
     <div className="home">
@@ -19,15 +32,16 @@ const Home = () => {
         </div>
 
         <ul className="home-links">
-          
-          {!currentUser ? <li>
-              <Link to="/register">Register</Link>
-            </li> : <li>
+
+          {!currentUser ? <li> <Link to="/register">Register</Link> </li> : null}
+
+          {currentUser && <h2 className='text-[4vh]'>{greeting}, {currentUser.username}</h2>}
+
+             {/* <li>
               <button className="--btn --btn-primary">
                 <Link to="/login">Login</Link>
               </button>
-            </li>
-          } 
+            </li> */}
 
             <li>
               <button className="--btn --btn-primary">

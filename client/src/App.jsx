@@ -12,6 +12,7 @@ import Layout from './Component/Layout/Layout';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from './Component/protect/PrivateRoute';
+import Addproduct from './Pages/Addproduct/Addproduct';
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/resetpassword/:resetToken" element={<Reset/>} />
 
         <Route element={<PrivateRoute/>}>
+          
           <Route path='/dashboard' element={
             <Sidebars>
               <Layout>
@@ -35,9 +37,18 @@ const App = () => {
               </Layout>
             </Sidebars>
           }/>
+
+          <Route path='/add-product' element={
+            <Sidebars>
+              <Layout>
+                <Addproduct/>
+              </Layout>
+            </Sidebars>
+          }/>
+
         </Route>
 
-        
+
     </Routes>
     </>
   )

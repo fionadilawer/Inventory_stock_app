@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {signInStart, signInSuccess, signInFailure} from '../../Redux/user/Auth.slice';
 import { toast } from "react-toastify";
 import Loader from '../../Component/loading/Loader';
+import Oauth from '../../Component/Oauth/Oauth';
 
 const Login = () => {
 
@@ -87,12 +88,16 @@ const Login = () => {
               Login
             </button>
           </form>
+          
+          <Oauth/>
+
           <Link to="/forgot">Forgot Password</Link>
 
           <span className={styles.register}>
             <p> &nbsp; Don't have an account? &nbsp;</p>
             <Link to="/register">Register</Link>
           </span>
+          
         </div>
   
       </Card>
