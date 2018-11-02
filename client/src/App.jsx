@@ -9,12 +9,16 @@ import Login from './Pages/Auth/Login';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Sidebars from './Component/sidebar/Sidebars';
 import Layout from './Component/Layout/Layout';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 const App = () => {
   return (
     <>
+    <ToastContainer />
+    
     <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/forgot" element={<Forgot/>} />

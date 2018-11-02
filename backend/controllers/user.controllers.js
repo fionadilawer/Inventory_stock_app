@@ -15,10 +15,10 @@ export const signup = asyncHandler(async (req, res, next)=>{
     const {username, email, password} = req.body;
 
     //validating the input fields
-    if (!username || !email || !password) return next(errorHandler(400, 'please, fill in all required fields'));
+    //if (!username || !email || !password) return next(errorHandler(400, 'please, fill in all required fields'));
     
     //validating the password length
-    if(password.length < 6) return next(errorHandler(400, 'password must be up to 6 character'));
+    //if(password.length < 6) return next(errorHandler(400, 'password must be up to 6 character'));
 
     //checking if users already exist...
     const userExist = await User.findOne({email});
