@@ -7,7 +7,7 @@ dotenv.config();
 
 
 //@desc      CONTACT_Us  funct...
-//@route    POST /api/api/contact
+//@route    POST /api/contact
 //@access    public
 export const contactus = asyncHandler(async (req, res, next)=>{
     const { subject, message } = req.body;
@@ -32,6 +32,7 @@ export const contactus = asyncHandler(async (req, res, next)=>{
   }
 
 });
+
 
 
 
