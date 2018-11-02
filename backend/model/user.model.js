@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcryptjs from 'bcryptjs';
 
 const userSchema  = new mongoose.Schema({
     username: {
@@ -37,6 +38,18 @@ const userSchema  = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+//Encrypting the password before saving it to the database
+userSchema.pre('save', async function(next) { 
+
+    //if the password is not modified go to next piece of code
+    if(!this.isModified("password")) return next();
+
+    //bcrypting or hiding the password 
+    const hashedpassword = bcryptjs.hashSync(this.password, 10);
+    this.password = hashedpassword;
+    next();
+});
 
 const User = mongoose.model('User', userSchema);
 export default User;
