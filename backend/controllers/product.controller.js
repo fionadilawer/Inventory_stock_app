@@ -14,7 +14,7 @@ export const createProduct = asyncHandler(async (req, res, next) => {
     // Validation
     if (!name || !category || !quantity || !price || !description) {
       return next(errorHandler(400, 'Please fill in all required fields'));
-    }
+    };
   
     // Handle Image upload
     let fileData = {};

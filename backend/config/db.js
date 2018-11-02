@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-dotenv.config();
 import asyncHandler from 'express-async-handler';  //using asyncHandler dependency... to handle all error in a func...
 
 

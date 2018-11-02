@@ -5,9 +5,8 @@ import {errorHandler} from '../middlewares/errors.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import dotenv from 'dotenv';
 import { sendEmail } from '../utils/sendEmail.js';
-dotenv.config();
+
 
 
 //@desc      GET_USER funct...

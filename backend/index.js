@@ -7,6 +7,8 @@ import db from "./config/db.js";
 import userRouter from "./routes/user.route.js";
 import profileRouter from "./routes/profile.route.js";
 import productRouter from "./routes/product.route.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
 //connection to databas
 db()
