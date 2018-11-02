@@ -60,7 +60,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <ProductSummary />
+      <ProductSummary products={products} />
       <Productlist products={products} isLoading={loading} />
     </div>
   )
