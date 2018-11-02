@@ -58,13 +58,16 @@ export const signin = asyncHandler(async(req, res, next)=>{
 
     //checking if user exit
     const userExit = await User.findOne({email});
-    if(!userExit) return next(errorHandler(400, 'wrong credentail'))
+    if(!userExit) return next(errorHandler(400, 'wrong credentail'));
 
-    //checing if password is correct
+    //checking if password is correct
     const validPassword = bcryptjs.compareSync(password, userExit.password);
-    if(!validPassword) return next(errorHandler(401, 'wrong credential'));
+    if(!validPassword) return next(errorHandler(401, 'wrong credentail'));
     const token = jwt.sign({id: userExit._id}, process.env.JWT_SECRET);
-    
+
+     //hiding the password 
+     const {password: pass, ...rest } = userExit._doc; 
+
     try {
          if (userExit && validPassword) {
             res.cookie("token", token, {
@@ -73,7 +76,7 @@ export const signin = asyncHandler(async(req, res, next)=>{
                 sameSite: "none",
                 secure: true,
               })
-            .status(200).json('login successfully');
+            .status(200).json(rest);
         }
     } catch (error) {
         next(error  )
