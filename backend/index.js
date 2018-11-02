@@ -10,8 +10,8 @@ import productRouter from "./routes/product.route.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-//connection to databas
-db()
+//connection to database
+db();
 
 
 const __dirname = path.resolve();
@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(cors())
+app.use(cors());
 
 //directing where the imgage will be stored i.e (is this the best option?)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

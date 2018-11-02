@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer';
 import asyncHandler from 'express-async-handler';
-import dotenv from 'dotenv';
-dotenv.config();
 
 
 //sending e-mail
